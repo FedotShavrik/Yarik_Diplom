@@ -1,7 +1,7 @@
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QDialog, QLineEdit, QLabel, QVBoxLayout, QWidget, QHBoxLayout, QSpinBox
 from PyQt5 import QtGui
-from functions import initial_data, creating_excel_lab3, creating_excel_lab1, all, mean, strings, mastostr, mastostr2, find_plateau_time
+import functions
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import openpyxl
