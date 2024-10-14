@@ -166,7 +166,7 @@ class WindowLab3(QMainWindow):
             self.close()
 
         except ValueError:
-            error = error_window()
+            error = ErrorWindow()
             error.exec_()
 
 
@@ -210,7 +210,7 @@ class PlotWindowLab3(QDialog):
 
         layout.addLayout(h_layout)
 
-        self.another_window = AnotherMesuereLab3(self)
+        self.another_window = AnotherMesureLab3(self)
         self.another_window.show()
         self.close()
 
@@ -251,12 +251,12 @@ class WindowLab1(QMainWindow):
 
     def showlab1(self):
         measurement_count = self.spin_box.value()
-        self.main_window = pervayalaba1(measurement_count)
+        self.main_window = Lab1(measurement_count)
         self.main_window.show()
         self.close()
 
 
-class pervayalaba1(QMainWindow):
+class Lab1(QMainWindow):
     def __init__(self, measurement_count):
         super().__init__()
         self.setWindowTitle('Форма ввода данных')
@@ -359,7 +359,7 @@ class pervayalaba1(QMainWindow):
 
 
         except ValueError:
-            error = error_window()
+            error = ErrorWindow()
             error.exec_()
 
 
@@ -392,12 +392,12 @@ class PlotWindowLab1(QDialog):
         label.setPixmap(pixmap)
         layout.addWidget(label)
 
-        self.another_window = AnotherMesuereLab1(self)
+        self.another_window = AnotherMesureLab1(self)
         self.another_window.show()
         self.close()
 
 
-class error_window(QDialog):
+class ErrorWindow(QDialog):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('Ошибка')
@@ -425,7 +425,7 @@ class error_window(QDialog):
 
 
 
-class AnotherMesuereLab1(QDialog):
+class AnotherMesureLab1(QDialog):
     def __init__(self, parent_window, parent=None):
         super().__init__(parent)
         self.parent_window = parent_window
@@ -471,7 +471,7 @@ class AnotherMesuereLab1(QDialog):
         self.main_window.show()
         self.close()
 
-class AnotherMesuereLab3(QDialog):
+class AnotherMesureLab3(QDialog):
     def __init__(self, parent_window, parent=None):
         super().__init__(parent)
         self.parent_window = parent_window
