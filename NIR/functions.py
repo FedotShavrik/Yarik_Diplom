@@ -14,7 +14,7 @@ from decimal import Decimal
 def initial_data():
     # Ввод начальных данных
 
-    global wave_len, width, heigh, array_time, array_trans
+    global wave_len, width, heigh, time_list, trans_list
 
     wave_len = float(input("Введите длину волны в нанометрах:"))
     print("Введите размер пятна облучения")
@@ -23,15 +23,13 @@ def initial_data():
     heigh = float(input("Высота:"))
 
     time = input("Введите время облучения в секундах через пробел:")
-    array_time = time.split()
-    array_time = list(map(int, array_time))
+    time_list = [int(x) for x in time.split()]
 
     trans = input("Пропускание вещества в процентах% через пробел:")
-    array_trans = trans.split()
-    array_trans = list(map(int, array_trans))
+    trans_list = [int(x) for x in trans.split()]
 
 
-def creating_excel_lab3(array_trans, array_time, wave_len, width, heigh, power):
+def creating_excel_lab3(trans_list, time_list, wave_len, width, heigh, power):
     # Создаем новый файл Excel
     wb = openpyxl.Workbook()
     sheet = wb.active
@@ -44,40 +42,40 @@ def creating_excel_lab3(array_trans, array_time, wave_len, width, heigh, power):
     sheet['C1'] = "Полная доза облучение, Дж"
 
     row = 2
-    for i in array_trans:
+    for i in trans_list:
         sheet[f'A{row}'] = i
         i += 1
         row += 1
 
     row = 2
-    for i in array_time:
+    for i in time_list:
         sheet[f'B{row}'] = i
         i += 1
         row += 1
 
     row = 2
     array_power = []
-    for i in array_time:
+    for i in time_list:
         sheet[f'C{row}'] = i * width * heigh * power
         array_power.append(i * width * heigh * power)
         i += 1
         row += 1
 
-    plateau_time = find_plateau_time(array_time, array_trans)
+    plateau_time = find_plateau_time(time_list, trans_list)
     sheet['H1'] = "Время выхода на плато"
     sheet['H2'] = plateau_time
 
-    plt.plot(array_power, array_trans, color='g')
+    plt.plot(array_power, trans_list, color='g')
     plt.title('График зависимости пропускания от дозы облучения')
-    plt.scatter(array_power, array_trans, color='g')
+    plt.scatter(array_power, trans_list, color='g')
     plt.xlabel('Доза, Дж')
     plt.ylabel('Пропускание, %')
     plot_filename2 = 'images/graph2_lab3.png'
     plt.savefig(plot_filename2)
     plt.close()
 
-    plt.scatter(array_time, array_trans, color='b', label='Измерения')
-    plt.plot(array_time, array_trans, color='b')
+    plt.scatter(time_list, trans_list, color='b', label='Измерения')
+    plt.plot(time_list, trans_list, color='b')
     plt.axvline(x=plateau_time, color='r', linestyle='--', label=f'Время выхода на плато: {plateau_time}')
     plt.title('График зависимости пропускания от времени')
     plt.xlabel('Время, с')
@@ -210,18 +208,18 @@ def mastostr2(mas):
         str += f"{i}" + " "
     return str
 
-def find_plateau_time(array_time, array_trans, threshold=2):
-    n = len(array_trans)
+def find_plateau_time(time_list, trans_list, threshold=2):
+    n = len(trans_list)
 
     mid = n // 2  # Начинаем с середины массива
 
     # Проверка центрального элемента и элементов вокруг него
     for i in range(mid, n - 1):
-        if abs(array_trans[i] - array_trans[i - 1]) <= threshold and abs(array_trans[i] - array_trans[i + 1]) <= threshold:
-            return array_time[i]
+        if abs(trans_list[i] - trans_list[i - 1]) <= threshold and abs(trans_list[i] - trans_list[i + 1]) <= threshold:
+            return time_list[i]
 
     for i in range(mid - 1, 0, -1):
-        if abs(array_trans[i] - array_trans[i - 1]) <= threshold and abs(array_trans[i] - array_trans[i + 1]) <= threshold:
-            return array_time[i]
+        if abs(trans_list[i] - trans_list[i - 1]) <= threshold and abs(trans_list[i] - trans_list[i + 1]) <= threshold:
+            return time_list[i]
 
-    return array_time[-1]
+    return time_list[-1]
