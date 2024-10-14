@@ -27,13 +27,13 @@ class Window(QMainWindow):
         self.button1.setText("Ввести начальные данные для лабораторной работы по рассеиванию")
         self.button1.adjustSize()
         self.button1.setSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        self.button1.clicked.connect(self.open1stlabWindow)
+        self.button1.clicked.connect(self.open_lab1)
 
         self.button2 = QtWidgets.QPushButton(self)
         self.button2.setText("Ввести начальные данные для лабораторной работы ФДЭ")
         self.button2.adjustSize()
         self.button2.setSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        self.button2.clicked.connect(self.open3rdlabWindow)
+        self.button2.clicked.connect(self.open_lab3)
 
         text_greatings1 = ("Вас приветствует программа для составления отчетов по лабораторным работам \n"
                           "№1 «Изучение особенностей рассеяния лазерного излучения в модельных биосредах»\n"
@@ -58,18 +58,18 @@ class Window(QMainWindow):
         layout.addWidget(self.main_text2)
         layout.addWidget(self.button2)
 
-    def open3rdlabWindow(self):
-        self.open3rdlabWindow = treraya_laba_Window()
-        self.open3rdlabWindow.show()
+    def open_lab3(self):
+        self.open_lab3 = WindowLab3()
+        self.open_lab3.show()
         self.close()
 
-    def open1stlabWindow(self):
-        self.open1stlabWindow = pervaya_laba_Window()
-        self.open1stlabWindow.show()
+    def open_lab1(self):
+        self.open_lab1 = WindowLab1()
+        self.open_lab1.show()
         self.close()
 
 
-class treraya_laba_Window(QMainWindow):
+class WindowLab3(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('Форма ввода данных')
@@ -210,12 +210,12 @@ class PlotWindowLab3(QDialog):
 
         layout.addLayout(h_layout)
 
-        self.another_window = another_mes3(self)
+        self.another_window = AnotherMesuereLab3(self)
         self.another_window.show()
         self.close()
 
 
-class pervaya_laba_Window(QMainWindow):
+class WindowLab1(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('Форма ввода данных')
@@ -325,7 +325,7 @@ class pervayalaba1(QMainWindow):
         main_layout.addLayout(hh_layout)
 
     def go_back(self):
-        self.main_window = pervaya_laba_Window()
+        self.main_window = WindowLab1()
         self.main_window.show()
         self.close()
 
@@ -392,7 +392,7 @@ class PlotWindowLab1(QDialog):
         label.setPixmap(pixmap)
         layout.addWidget(label)
 
-        self.another_window = another_mes1(self)
+        self.another_window = AnotherMesuereLab1(self)
         self.another_window.show()
         self.close()
 
@@ -425,7 +425,7 @@ class error_window(QDialog):
 
 
 
-class another_mes1(QDialog):
+class AnotherMesuereLab1(QDialog):
     def __init__(self, parent_window, parent=None):
         super().__init__(parent)
         self.parent_window = parent_window
@@ -450,7 +450,7 @@ class another_mes1(QDialog):
         self.button1 = QtWidgets.QPushButton(self)
         self.button1.setText("Да")
         self.button1.adjustSize()
-        self.button1.clicked.connect(self.open1stlabWindow)
+        self.button1.clicked.connect(self.open_lab1)
         h_layout.addWidget(self.button1)
 
         self.button2 = QtWidgets.QPushButton(self)
@@ -461,9 +461,9 @@ class another_mes1(QDialog):
 
         main_layout.addLayout(h_layout)
 
-    def open1stlabWindow(self):
-        self.open1stlabWindow = pervaya_laba_Window()
-        self.open1stlabWindow.show()
+    def open_lab1(self):
+        self.open_lab1 = WindowLab1()
+        self.open_lab1.show()
         self.close()
 
     def go_back(self):
@@ -471,7 +471,7 @@ class another_mes1(QDialog):
         self.main_window.show()
         self.close()
 
-class another_mes3(QDialog):
+class AnotherMesuereLab3(QDialog):
     def __init__(self, parent_window, parent=None):
         super().__init__(parent)
         self.parent_window = parent_window
@@ -497,7 +497,7 @@ class another_mes3(QDialog):
         self.button1.setText("Да")
         self.button1.move(15, 70)
         self.button1.adjustSize()
-        self.button1.clicked.connect(self.open3rdlabWindow)
+        self.button1.clicked.connect(self.open_lab3)
         h_layout.addWidget(self.button1)
 
         self.button2 = QtWidgets.QPushButton(self)
@@ -509,9 +509,9 @@ class another_mes3(QDialog):
 
         main_layout.addLayout(h_layout)
 
-    def open3rdlabWindow(self):
-        self.open3rdlabWindow = treraya_laba_Window()
-        self.open3rdlabWindow.show()
+    def open_lab3(self):
+        self.open_lab3 = WindowLab3()
+        self.open_lab3.show()
         self.close()
 
     def go_back(self):
